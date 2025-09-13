@@ -51,6 +51,23 @@ class Body {
     }
 }
 
+function overlap(box1, box2) {
+    return !(box1.right < box2.left || 
+             box1.left > box2.right || 
+             box1.bottom < box2.top || 
+             box1.top > box2.bottom);
+}
+
+class Cell {
+    constructor(top, bottom, left, right) {
+        this.top = top;
+        this.bottom = bottom;
+        this.left = left;
+        this.right = right;
+        this.bodies = [];
+    }
+}
+
 const bodies = [];
 const numBodies = 10000;
 for (let i = 0; i < numBodies; i++) {
@@ -107,6 +124,11 @@ function animate(ts) {
                 }
             }
         }
+    }
+
+    for (const b of bodies) {
+        const box = { top: b.y - b.radius * 2, bottom: b.y + b.radius * 2, left: b.x - b.radius * 2, right: b.x + b.radius * 2 };
+
     }
 
     for (const b of bodies) b.draw();
